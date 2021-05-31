@@ -1,7 +1,7 @@
 import Axios from 'axios'
 
 const productionAPI = ''
-const developmentAPI = 'http://localhost:3001'
+const developmentAPI = 'https://mearn-deployment.herokuapp.com/'
 
 const CalendarAPI = Axios.create({
     baseURL:developmentAPI
