@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import CalendarAPIService from '../shared/api/service/CalendarAPIService'
 
 export const RegisterView = () => {
-   const [newUser, setNewUser] = useState({email: '', apartment_nr: '', password: '' })
-   const [user, setUserId] = useState('')
+   //const [newUser, setNewUser] = useState({email: '', apartment_nr: '', password: '' })
+   //const [user, setUserId] = useState('')
+   const [APIData, setAPIData] = useState([])
 
-   const [newSlot, setSlot] = useState({starttime:''})
+   //const [newSlot, setSlot] = useState({starttime:''})
 
 
-
+/*
       const registerNewUser = async () => {
         try{
             const {data} = await CalendarAPIService.registerUser(newUser)
@@ -61,64 +62,46 @@ export const RegisterView = () => {
         console.log('error!!!',error)
     }
     }
-
-    const getAllSlots = async () => {
+*/
+    const getAllUsers = async () => {
         try{
-            const {data} = await CalendarAPIService.allSlots()
-             console.log(data)
+            const {data} = await CalendarAPIService.allUsers()
+            setAPIData(data)
+             //console.log(data)
         }
         catch(error){
         console.log('error!!!',error)
-    }
-    }
+    }}
+     
+    const displayData = () => {
+
+        const userList = APIData.map((user) =>{
+           return (
+            <>
+            <h3>Email: {user.email}</h3>
+            <h3>Password: {user.password}</h3>
+            <h3>Apartment: {user.apartment_nr}</h3>
+            </>
+           )})
+           
+           return(
+
+            <>{userList}</>
+           )
+           
+
  
- 
- 
+}
     
 return (
     <div>
-        <h1>Register</h1>
-
-       <input placeholder="Email" onChange={event => setNewUser({...newUser, email: event.target.value})} /><br/>
-       <input placeholder="Password" onChange={event => setNewUser({...newUser, password: event.target.value})} /><br/>
-       <input placeholder="Apartment number" onChange={(event) => setNewUser({...newUser, apartment_nr: event.target.value})}/><br/>
-        <button onClick={() => registerNewUser()}>register</button>
-
-        <hr/>
-
-        <h1>Get One User By query</h1>
-
-        <input placeholder="User ID" onChange={event => setUserId(event.target.value)} /><br/>
-        <button onClick={() => getOneUserByQuery()}>Get user by query</button>
-
-        <hr/>
-
-        <h1>Get One User By ID</h1>
-
-        <input placeholder="User ID" onChange={event => setUserId(event.target.value)} /><br/>
-        <button onClick={() => getOneUserByID()}>Get user  by ID</button>
-
-        <h1>Update</h1>
-
-        <input placeholder="User ID" onChange={event => setUserId(event.target.value)} /><br/>
-        <input placeholder="Email" onChange={event => setNewUser({...newUser, email: event.target.value})} /><br/>
-       <input placeholder="Password" onChange={event => setNewUser({...newUser, password: event.target.value})} /><br/>
-       <input placeholder="Apartment number" onChange={(event) => setNewUser({...newUser, apartment_nr: event.target.value})}/><br/>
-        
-        <button onClick={() => updateOneUserByID()}>Update</button>
-
-        <h1>Delet User By ID</h1>
-
-        <input placeholder="User ID" onChange={event => setUserId(event.target.value)} /><br/>
-        <button onClick={() => deleteOneUser()}>Delete</button>
-
        
-        <h1>Get All Slots</h1>
+        <button onClick={() => getAllUsers()}>All Users</button>
 
-
-        <button onClick={() => getAllSlots()}>All slots</button>
-
-<hr/>
+        <h1>User Data</h1> <br/>
+       
+        <>{displayData()}</>
+            
                 
     </div>
 )
